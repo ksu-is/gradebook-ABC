@@ -35,3 +35,12 @@ class GradeCalculator:
         return return_str
 
     def add_category(self, category_name: str, percentage_of_grade: str) -> None:
+        assert len(category_name) > 0, f'GradeCalculator.add_category: Category name must not be an empty string'
+        assert len(percentage_of_grade) > 0, f'GradeCalculator.add_category: Category percentage must not be an empty string'
+
+        try:
+            percentage_of_grade = float(percentage_of_grade)
+        except:
+            raise AssertionError(f'GradeCalculator.add_category: Category percentage must be an int or float')
+
+        assert percentage_of_grade > 0, f'GradeCalculator.add_category: Category percentage must be greater than 0'
