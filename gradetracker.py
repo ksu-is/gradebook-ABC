@@ -44,3 +44,21 @@ class GradeCalculator:
             raise AssertionError(f'GradeCalculator.add_category: Category percentage must be an int or float')
 
         assert percentage_of_grade > 0, f'GradeCalculator.add_category: Category percentage must be greater than 0'
+        
+        if category_name in self.categories:
+            raise KeyError(f'GradeCalculator.add_category: Category {category_name} has already been added')
+        self.categories[category_name] = (percentage_of_grade, {})
+
+        if not self._is_possible_grade_less_than_or_equal_100():
+            total_percentage_too_long = self._calculate_total_possible_grade()
+            del self.categories[category_name]
+            raise ValueError(f'GradeCalculator.add_category: Percentage {percentage_of_grade}% of category {category_name} would make the total possible percentage {total_percentage_too_long}%, which exceeds the possible 100%')
+
+    def remove_category(self, category_name: str) -> None:
+        '''
+        Removes a category from self.categories, given a category name.
+        If given an invalid category_name, raises KeyError
+        '''
+        if category_name not in self.categories:
+            raise KeyError(f"GradeCalculator.remove_category: Category '{category_name}' is not a valid key")
+        del self.categories[category_name]
