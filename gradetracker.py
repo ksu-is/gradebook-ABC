@@ -21,10 +21,10 @@ def enterGrades():
         print(str(nameToEnter)+' now has these grades:')
         print(students[nameToEnter])
     else:
-        print('Student not found. Please check your spelling or go back and add if new.')
+        print('Student not found.')
 
 def removeStudent():
-    nameToRemove = input('Who do you want to remove? ')
+    nameToRemove = input('Which student do you want to remove from the gradebook? ')
     if nameToRemove in students:
         print('Removing '+nameToRemove)
         del students[nameToRemove]
