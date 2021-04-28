@@ -53,13 +53,13 @@ def main():
     action = input('What would you like to do? (Enter a number) ')
     
     if action == '1':
-        #print('1 selected')
+        
         enterGrades()
     elif action == '2':
-        #print('2 selected')
+        
         removeStudent()
     elif action == '3':
-        
+                
         averageStudents()
     elif action == '4':
         
