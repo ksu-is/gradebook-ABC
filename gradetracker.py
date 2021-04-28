@@ -79,10 +79,10 @@ if login in admins:
     password = input('Password: ')
     if admins[login] == password:
         print('Welcome,',login)
-        #now run the code
+        
         while True:
             main()
     else:
-        print('Invalid password.')
+        print('Incorrect password.')
 else:
-    print('Invalid user.')
+    print('Incorrect user.')
