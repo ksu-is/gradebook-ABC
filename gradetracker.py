@@ -1,64 +1,82 @@
-class GradeCalculator:
+import statistics as s
 
-    # Constants for accessing 
-    PERCENTAGE_OF_GRADE = 0
-    ASSIGNMENTS = 1
 
-    def __init__(self):
+admins = {'Cameron':'Taylor','Smith':'Faculty'}
 
-        # Initialize the categories dict
-        self.categories = {}
 
-    def __str__(self):
+students = {'John':[87,88,98,90],
+            'Dunc':[88,67,93,90],
+            'Hunter':[90,88,78,90],
+            'Zach':[100,90,40,90],
+            'Steve':[102,70,90,30]}
 
-        # Create base string
-        return_str = ''
+
+def enterGrades():
+    nameToEnter = input('Student name: ')
+    gradeToEnter = input('Grade: ')
+    
+    if nameToEnter in students:
+        print('Adding grade for'+nameToEnter)
+        students[nameToEnter].append(float(gradeToEnter)) 
+        print(str(nameToEnter)+' now has these grades:')
+        print(students[nameToEnter])
+    else:
+        print('Student not found. Please check your spelling or go back and add if new.')
+
+def removeStudent():
+    nameToRemove = input('Who do you want to remove? ')
+    if nameToRemove in students:
+        print('Removing '+nameToRemove)
+        del students[nameToRemove]
+        print(students)
+    else:
+        print('Student not found.')
+
+def averageStudents():
+    for student in students:
+        grades = students[student]
+        average = s.mean(grades) 
+        print(student,' average ',average)
+
+def main():
+    print("User: " + login)
+    
+    print("""
+    Welcome to the Cam's Gradebook
+
+    [1] - Enter Grades
+    [2] - Remove Student
+    [3] - Student Averages
+    [4] - Log Out
+    """)
+
+    action = input('What would you like to do? (Enter a number) ')
+    
+    if action == '1':
+        #print('1 selected')
+        enterGrades()
+    elif action == '2':
+        #print('2 selected')
+        removeStudent()
+    elif action == '3':
         
-        # Loop through all categories
-        for k,v in self.categories.items():
-
-            if len(v[GradeCalculator.ASSIGNMENTS]) == 0:
-                return_str += f'{k}({v[GradeCalculator.PERCENTAGE_OF_GRADE]}%):\n'
-
-            elif len(v[GradeCalculator.ASSIGNMENTS]) == 1:
-                return_str += f'{k}({v[GradeCalculator.PERCENTAGE_OF_GRADE]}%): '
-                for k,v in v[GradeCalculator.ASSIGNMENTS].items():
-                    return_str += f'{k}: {v[0]}/{v[1]}\n'
-
-            else:
-                return_str += f'{k}({v[GradeCalculator.PERCENTAGE_OF_GRADE]}%): '
-                for k,v in v[GradeCalculator.ASSIGNMENTS].items():
-                    return_str += f'{k}: {v[0]}/{v[1]}, '
-                return_str = return_str[:-2]
-                return_str += '\n'
-
-        return return_str
-
-    def add_category(self, category_name: str, percentage_of_grade: str) -> None:
-        assert len(category_name) > 0, f'GradeCalculator.add_category: Category name must not be an empty string'
-        assert len(percentage_of_grade) > 0, f'GradeCalculator.add_category: Category percentage must not be an empty string'
-
-        try:
-            percentage_of_grade = float(percentage_of_grade)
-        except:
-            raise AssertionError(f'GradeCalculator.add_category: Category percentage must be an int or float')
-
-        assert percentage_of_grade > 0, f'GradeCalculator.add_category: Category percentage must be greater than 0'
+        averageStudents()
+    elif action == '4':
         
-        if category_name in self.categories:
-            raise KeyError(f'GradeCalculator.add_category: Category {category_name} has already been added')
-        self.categories[category_name] = (percentage_of_grade, {})
+        exit()
+    else:
+        print('Valid option not selected.') 
 
-        if not self._is_possible_grade_less_than_or_equal_100():
-            total_percentage_too_long = self._calculate_total_possible_grade()
-            del self.categories[category_name]
-            raise ValueError(f'GradeCalculator.add_category: Percentage {percentage_of_grade}% of category {category_name} would make the total possible percentage {total_percentage_too_long}%, which exceeds the possible 100%')
+login = input('User: ')
 
-    def remove_category(self, category_name: str) -> None:
-        '''
-        Removes a category from self.categories, given a category name.
-        If given an invalid category_name, raises KeyError
-        '''
-        if category_name not in self.categories:
-            raise KeyError(f"GradeCalculator.remove_category: Category '{category_name}' is not a valid key")
-        del self.categories[category_name]
+if login in admins:
+    password = input('Password: ')
+    if admins[login] == password:
+        print('Welcome,',login)
+        #now run the code
+        while True:
+            main()
+    else:
+        print('Invalid password.')
+else:
+    print('Invalid user.')
