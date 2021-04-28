@@ -10,6 +10,9 @@ students = {'John':[87,88,98,90],
             'Zach':[100,90,40,90],
             'Steve':[102,70,90,30]}
 
+def addAssignment():
+    nameToEnter = input('Assignment name:')
+    TypeToEnter = input('Assignment type:')
 
 def enterGrades():
     nameToEnter = input('Student name: ')
@@ -43,7 +46,7 @@ def main():
     
     print("""
     Welcome to the Cam's Gradebook
-
+    [0] - Add Asignments        
     [1] - Enter Grades
     [2] - Remove Student
     [3] - Student Averages
@@ -52,6 +55,9 @@ def main():
 
     action = input('What would you like to do? (Enter a number) ')
     
+    if action == '0':
+                        
+       addAssignment()                 
     if action == '1':
         
         enterGrades()
